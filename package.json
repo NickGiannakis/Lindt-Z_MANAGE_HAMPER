@@ -1,0 +1,27 @@
+{
+	"name": "zmanagehamper",
+	"version": "0.0.2",
+	"private": true,
+	"sapuxLayer": "CUSTOMER_BASE",
+	"description": "Manage Hampers - SAP Fiori Application",
+	"keywords": [
+		"ui5",
+		"openui5",
+		"sapui5"
+	],
+	"main": "webapp/index.html",
+	"scripts": {
+		"start": "fiori run --open \"index.html?sap-client=200&sap-ui-xx-viewCache=false\"",
+		"start-local": "fiori run --config ./ui5-local.yaml --open \"index.html?sap-client=200&sap-ui-xx-viewCache=false\"",
+		"build": "ui5 build -a --clean-dest --include-task=generateCachebusterInfo",
+		"deploy": "npm run build && fiori deploy --config ui5-deploy.yaml",
+		"deploy-config": "fiori add deploy-config",
+		"undeploy": "npm run build && fiori undeploy --config ui5-deploy.yaml",
+		"deploy-test": "npm run build && fiori deploy --config ui5-deploy.yaml --testMode true"
+	},
+	"devDependencies": {
+		"@ui5/cli": "^4.0.0",
+		"@sap/ux-ui5-tooling": "1",
+		"rimraf": "6.0.1"
+	}
+}

@@ -1,0 +1,199 @@
+<mvc:View controllerName="zmanagehamper.controller.HamperDetails"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout">
+    <ObjectPageLayout id="pageHamperDETAILS"
+        upperCaseAnchorBar="false"
+        busy="{HamperDetailsView>/busy}">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title text="{HamperNo}"
+                        wrapping="true" />
+                </expandedHeading>
+
+                <snappedHeading>
+                    <m:HBox>
+                        <m:VBox>
+                            <m:Title text="{HamperNo}"
+                                wrapping="true" />
+                            <m:HBox>
+                                <m:Text text="{Description1}" />
+                            </m:HBox>
+                        </m:VBox>
+                    </m:HBox>
+                </snappedHeading>
+
+                <expandedContent>
+                    <m:HBox>
+                        <m:Text text="{Description1}" />
+                    </m:HBox>
+                </expandedContent>
+
+                <snappedTitleOnMobile>
+                    <m:Title text="{HamperNo}" />
+                </snappedTitleOnMobile>
+
+                <actions>
+                    <m:Button text="{i18n>BTN_EDIT}"
+                        press="onBtnEditHamperPress"
+                        visible="false"/>
+                    <m:Button text="{i18n>BTN_PRINT}"
+                        press="onBtnPrintPress"/>                    
+                    <m:OverflowToolbarButton icon="sap-icon://action"
+                        type="Transparent"
+                        text="Share"
+                        tooltip="action" />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <headerContent>
+            <m:FlexBox wrap="Wrap"
+                fitContainer="true">
+                <m:VBox class="sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                    <m:HBox class="sapUiTinyMarginBottom"
+                        renderType="Bare">
+                        <m:Label text="{i18n>LBL_EAN}:"
+                            class="sapUiTinyMarginEnd" />
+                        <m:Text text="{Ean}" />
+                    </m:HBox>
+                    <m:HBox class="sapUiTinyMarginBottom"
+                        renderType="Bare">
+                        <m:Label text="{i18n>LBL_CREATE_AT}:"
+                            class="sapUiTinyMarginEnd" />
+                        <m:Text text="{path: 'CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}" />
+                    </m:HBox>
+                    <m:HBox class="sapUiTinyMarginBottom"
+                        renderType="Bare">
+                        <m:Label text="{i18n>LBL_CREATE_BY}:"
+                            class="sapUiTinyMarginEnd" />
+                        <m:Text text="{UserFullname}" />
+                    </m:HBox>
+                </m:VBox>
+
+                <m:VBox class="sapUiLargeMarginEnd">
+                    <m:Title text="{i18n>TIT_PRICING}"
+                        class="sapUiTinyMarginBottom" />
+                    <m:ObjectNumber number="{ parts:[{path:'SalesPrice'},{path:'Currency'}],	type: 'sap.ui.model.type.Currency',	formatOptions: {showMeasure: false}}"
+                        unit="{Currency}"
+                        class="sapMObjectNumberLarge"/>
+                </m:VBox>
+            </m:FlexBox>
+        </headerContent>
+
+        <sections>
+            <ObjectPageSection titleUppercase="false"
+                title="{i18n>TIT_HAMPER_DETAILS}">
+                <subSections>
+                    <ObjectPageSubSection title="{i18n>TIT_HAMPER_DETAILS}">
+                        <blocks>
+                            <forms:SimpleForm class="sapUxAPObjectPageSubSectionAlignContent"
+                                layout="ColumnLayout"
+                                columnsM="2"
+                                columnsL="3"
+                                columnsXL="4">
+                                <core:Title text="{i18n>TIT_PRICING}" />
+
+                                <m:Label text="{i18n>LBL_FINAL_PRICE}" />
+                                <m:ObjectNumber number="{ parts:[{path:'SalesPrice'},{path:'Currency'}],	type: 'sap.ui.model.type.Currency',	formatOptions: {showMeasure: false}}"
+                                    unit="{Currency}" />
+
+                                <core:Title text="{i18n>TIT_DESCRIPTION}" />
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang1})" />
+                                <m:Text text="{Description1}" />
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang2})"
+                                    visible="{ path: 'DescrLang2', formatter: '.formatter.checkDescriptionIsAvailable'}"/>
+                                <m:Text text="{Description2}"
+                                    visible="{ path: 'DescrLang2', formatter: '.formatter.checkDescriptionIsAvailable'}"/>
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang3})"
+                                    visible="{ path: 'DescrLang3', formatter: '.formatter.checkDescriptionIsAvailable'}"/>
+                                <m:Text text="{Description3}"
+                                    visible="{ path: 'DescrLang3', formatter: '.formatter.checkDescriptionIsAvailable'}"/>
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang4})"
+                                    visible="{ path: 'DescrLang4', formatter: '.formatter.checkDescriptionIsAvailable'}"/>
+                                <m:Text text="{Description4}"
+                                    visible="{ path: 'DescrLang4', formatter: '.formatter.checkDescriptionIsAvailable'}"/>
+
+                                <core:Title id="titGeneralDataDetails" text="{i18n>TIT_GENERAL_DATA}"/>
+
+                                <m:Label text="{i18n>LBL_TAX_CLASS}" visible="{HamperDetailsView>/taxVisible}"/>
+                                <m:Text text="{TaxClassDescr} ({TaxClass})" visible="{HamperDetailsView>/taxVisible}"/>
+
+                                <m:Label text="{i18n>LBL_MAT_SALES_REP}" visible="{HamperDetailsView>/matSalesRepVisible}"/>
+                                <m:Text text="{ProductOldId}" visible="{HamperDetailsView>/matSalesRepVisible}"/>
+                                
+                            </forms:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>TIT_PRODUCT_LIST}"
+                showTitle="false">
+                <subSections>
+                    <ObjectPageSubSection title="{i18n>TIT_PRODUCT_LIST}">
+                        <blocks>
+                            <m:Table class="sapUxAPObjectPageSubSectionAlignContent"
+                                width="auto"
+                                items="{StoreHamperItemSet}"
+                                updateFinished=".onUpdateFinished"
+                                busyIndicatorDelay="{HamperDetailsView>/tableBusyDelay}"
+                                busy="{HamperDetailsView>/tableBusy}">
+                                <m:headerToolbar>
+                                    <m:OverflowToolbar>
+                                        <m:Title text="{HamperDetailsView>/tableTitle}"
+                                            level="H2" />
+                                        <m:ToolbarSpacer />
+                                    </m:OverflowToolbar>
+                                </m:headerToolbar>
+
+                                <m:columns>
+                                    <m:Column minScreenWidth="Tablet"
+                                        demandPopin="true">
+                                        <m:Text text="{i18n>LBL_ITEM}" />
+                                    </m:Column>
+                                    <m:Column >
+                                        <m:Text text="{i18n>LBL_PRODUCT}" />
+                                    </m:Column>
+                                    <m:Column minScreenWidth="Tablet"
+                                        demandPopin="true">
+                                        <m:Text text="{i18n>LBL_EAN}" />
+                                    </m:Column>
+                                    <m:Column minScreenWidth="Tablet"
+                                        demandPopin="true">
+                                        <m:Text text="{i18n>LBL_QUANTITY}" />
+                                    </m:Column>
+                                    <m:Column hAlign="End">
+                                        <m:Text text="{i18n>LBL_SALES_PRICE}" />
+                                    </m:Column>
+                                </m:columns>
+
+                                <m:items>
+                                    <m:ColumnListItem vAlign="Middle">
+                                        <m:Text text="{BomItem}" />
+                                        <m:ObjectIdentifier title="{BomComponent}"
+                                            text="{Description}" />
+                                        <m:Text text="{Gtin}" />
+                                        
+                                        <m:ObjectNumber number="{ parts:[{path:'BomQuantity'}, {path:'BomUnit'}], formatter: '.formatter.formatUnit'}"
+                                           unit="{BomUnit}"  />
+                                        <m:ObjectNumber number="{ parts:[{path:'BomPrice'}, {path:'BomCurrency'}],	type: 'sap.ui.model.type.Currency',	formatOptions: {showMeasure: false}	}"
+                                            unit="{BomCurrency}" />
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

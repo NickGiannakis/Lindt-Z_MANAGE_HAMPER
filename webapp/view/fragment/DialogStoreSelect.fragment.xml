@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    controllerName="zmanagehamper.controller.fragment.DialogStoreSelect">
+
+    <Dialog id="dialogStoreSearch"
+        title="{i18n>TIT_SELECT_STORE}"
+        contentHeight="800px"
+        contentWidth="600px"
+        resizable="true"
+        draggable="true">
+        <content>
+            <OverflowToolbar>
+                <SearchField id="searchFieldStore"
+                    liveChange=".onSearch"
+                    width="100%" />
+            </OverflowToolbar>
+            <List id="listStores"
+                mode="SingleSelectMaster"
+                items="{/StoreSet}"
+                selectionChange=".onSelectStore">
+                <items>                    
+                    <ObjectListItem title="{SiteId}">
+                        <firstStatus/>
+                        <ObjectAttribute text="{Description}" />
+                        <ObjectAttribute text="{FormattedAddress}" />
+                    </ObjectListItem>
+                </items>
+            </List>
+        </content>
+        <buttons>
+            <Button text="{i18n>BTN_CANCEL}"
+                press=".onPressCancel"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

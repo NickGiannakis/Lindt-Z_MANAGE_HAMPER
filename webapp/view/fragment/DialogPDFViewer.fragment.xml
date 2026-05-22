@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    controllerName="zmanagehamper.controller.fragment.DialogPDFViewer">
+
+    <Dialog id="dialogPDFViewer"
+        title="PDF Viewer"
+        contentHeight="800px"
+        contentWidth="600px"
+        resizable="true"
+        draggable="true">
+        <content>
+            <ScrollContainer height="100%"
+                width="100%"
+                horizontal="true"
+                vertical="true">
+                <FlexBox direction="Column"
+                    renderType="Div"
+                    class="sapUiSmallMargin">                    
+                    <PDFViewer id="pdfViewer" source="{/Source}"
+                        title="{/Title}"
+                        height="{/Height}">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </PDFViewer>
+                </FlexBox>
+            </ScrollContainer>
+        </content>
+        <buttons>
+            <Button text="{i18n>BTN_CANCEL}"
+                press=".onPressCancel"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

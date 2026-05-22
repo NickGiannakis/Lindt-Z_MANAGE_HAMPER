@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    controllerName="zmanagehamper.controller.fragment.DialogNewProduct">
+
+    <Dialog id="dialogProductSearch"
+        title="{i18n>TIT_ADD_NEW_PRODUCT}"
+        contentHeight="800px"
+        contentWidth="600px"
+        resizable="true"
+        draggable="true">
+        <content>
+            <OverflowToolbar>
+                <SearchField id="searchField"
+                    liveChange=".onSearch"
+                    width="100%" />
+            </OverflowToolbar>
+            <List id="listProducts"
+                noDataText="{i18n>TXT_NO_PRODUCTS}"
+                mode="SingleSelectMaster"
+                items="{/StoreProductSet}"
+                selectionChange=".onSelectProduct">
+                <items>                    
+                    <ObjectListItem title="{Description}">
+                        <firstStatus/>
+                        <ObjectAttribute text="{ProductNumber}" />
+                        <ObjectAttribute text="{BaseEan}" />
+                    </ObjectListItem>
+                </items>
+            </List>
+        </content>
+        <buttons>
+            <Button text="{i18n>BTN_CANCEL}"
+                press=".onPressCancel"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

@@ -1,0 +1,252 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout"
+    xmlns:scan="sap.ndc"
+    controllerName="zmanagehamper.controller.HamperEdit"
+    width="">
+    <ObjectPageLayout id="pageHamperEdit"
+        showFooter="true"
+        busy="{HamperEditView>/busy}"
+        busyIndicatorDelay="{HamperEditView>/delay}">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title text="{i18n>TIT_NEW_HAMPER}"
+                        wrapping="true"/>
+                </expandedHeading>
+
+                <snappedHeading>
+                    <m:HBox>
+                        <m:VBox>
+                            <m:Title text="{i18n>TIT_NEW_HAMPER}"
+                                wrapping="true"/>
+                            <m:HBox>
+                                <m:Text id="txtHeadDescrSn"
+                                    text="{Description1}"/>
+                            </m:HBox>
+                        </m:VBox>
+                    </m:HBox>
+                </snappedHeading>
+
+                <expandedContent>
+                    <m:HBox>
+                        <m:Text id="txtHeadDescrEx"
+                            text="{Description1}"/>
+                    </m:HBox>
+                </expandedContent>
+
+                <snappedTitleOnMobile>
+                    <m:Title text="{i18n>TIT_NEW_HAMPER}"/>
+                </snappedTitleOnMobile>
+
+                <actions>
+                    <m:OverflowToolbarButton icon="sap-icon://action"
+                        type="Transparent"
+                        text="Share"
+                        tooltip="action"/>
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <headerContent>
+            <m:FlexBox wrap="Wrap"
+                fitContainer="true">
+                <m:VBox class="sapUiLargeMarginEnd">
+                    <m:Title text="{i18n>LBL_FINAL_PRICE}"
+                        class="sapUiTinyMarginBottom"/>
+                    <m:ObjectNumber number="{ parts:[{path:'HamperEditView>/finalPrice'},{path:'Currency'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+                        unit="{Currency}"
+                        class="sapMObjectNumberLarge"/>
+                </m:VBox>
+            </m:FlexBox>
+        </headerContent>
+
+        <sections>
+            <ObjectPageSection titleUppercase="false"
+                title="{i18n>TIT_HAMPER_DETAILS}">
+                <subSections>
+                    <ObjectPageSubSection title="{i18n>TIT_HAMPER_DETAILS}">
+                        <blocks>
+                            <forms:SimpleForm class="sapUxAPObjectPageSubSectionAlignContent"
+                                layout="ColumnLayout"
+                                columnsM="2"
+                                columnsL="3"
+                                columnsXL="4">
+                                <core:Title text="{i18n>TIT_PRICING}"/>
+
+                                <m:Label text="{i18n>LBL_FINAL_PRICE}"/>
+                                <m:Input id="inpFinalPrice"
+                                    fieldWidth="80%"
+                                    type="Number"
+                                    liveChange="onLiveChangeFinalPrice"
+                                    description="{Currency}"
+                                    showClearIcon="true"/>
+
+                                <m:Label text="{i18n>LBL_MARKUP}"/>
+                                <m:StepInput id="stepMarkup"
+                                    min="{HamperEditView>/HamperMarkupPercentAllowedFrom}"
+                                    max="{HamperEditView>/HamperMarkupPercentAllowedTo}"
+                                    validationMode="LiveChange"
+                                    change="onMarkupChange"
+                                    description="%"
+                                    enabled="{HamperEditView>/markupEnable}"/>
+
+                                <m:Label text="{i18n>LBL_TOTAL_PRICE}"/>
+                                <m:ObjectNumber id="onTotalPrice"
+                                    number="{ parts:[{path:'HamperEditView>/salesPrice'},{path:'Currency'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+                                    unit="{Currency}"/>
+
+                                <core:Title text="{i18n>TIT_DESCRIPTION}"/>
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang1})"
+                                    required="true"/>
+                                <m:Input id="inpDescrLang1"
+                                    value="{Description1}"
+                                    liveChange="onLiveChangeDescription"
+                                    valueStateText="{i18n>MSG_ERR_DESCRIPTION_MISSING}"/>
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang2})"
+                                    required="true"
+                                    visible="{HamperEditView>/descrLang2Enabled}"/>
+                                <m:Input id="inpDescrLang2"
+                                    value="{Description2}"
+                                    visible="{HamperEditView>/descrLang2Enabled}"
+                                    valueStateText="{i18n>MSG_ERR_DESCRIPTION_MISSING}"/>
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang3})"
+                                    required="true"
+                                    visible="{HamperEditView>/descrLang3Enabled}"/>
+                                <m:Input id="inpDescrLang3"
+                                    visible="{HamperEditView>/descrLang3Enabled}"
+                                    valueStateText="{i18n>MSG_ERR_DESCRIPTION_MISSING}"/>
+
+                                <m:Label text="{i18n>LBL_DESCRIPTION} ({DescrLang4})"
+                                    required="true"
+                                    visible="{HamperEditView>/descrLang4Enabled}"/>
+                                <m:Input id="inpDescrLang4"
+                                    visible="{HamperEditView>/descrLang4Enabled}"
+                                    valueStateText="{i18n>MSG_ERR_DESCRIPTION_MISSING}"/>
+
+                                <core:Title id="titGeneralData" text="{i18n>TIT_GENERAL_DATA}"/>
+
+                                <m:Label text="{i18n>LBL_TAX_CLASS}"
+                                    required="true"
+                                    visible="{TaxClassAvailable}"/>
+                                <m:ComboBox id="cbTax"
+                                    showSecondaryValues="true"
+                                    selectedKey="{DefaultTax}"
+                                    items="{ path: '/TaxSHSet', sorter: { path: 'Taxclassificationcategory' } }"
+                                    visible="{TaxClassAvailable}"
+                                    valueStateText="{i18n>MSG_ERR_TAX_MISSING}">
+                                    <core:ListItem key="{Taxclassification}"
+                                        text="{Taxclassificationname} ({Taxclassification})"/>
+                                </m:ComboBox>
+
+                                <m:Label text="{i18n>LBL_MAT_SALES_REP}"
+                                    visible="{MatSalesRepVisible}" />
+                                <m:Input id="inpMatSalesRep"
+                                    editable="{MatSalesRepEnable}"
+                                    visible="{MatSalesRepVisible}"/>
+
+                                <m:Label text="{i18n>LBL_REMARKS}"
+                                    visible="{RemarksVisible}"/>
+                                <m:Text id="txtMatSalesRep"
+                                    visible="{RemarksVisible}"/>
+
+                            </forms:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+
+                </subSections>
+            </ObjectPageSection>
+            <ObjectPageSection title="{i18n>TIT_PRODUCT_LIST}"
+                titleUppercase="false">
+                <subSections>
+                    <ObjectPageSubSection title="{i18n>TIT_PRODUCT_LIST}">
+                        <blocks>
+                            <m:Table id="tableProductsAdd"
+                                class="sapUxAPObjectPageSubSectionAlignContent"
+                                width="auto"
+                                updateFinished=".onUpdateFinished"
+                                busyIndicatorDelay="{HamperEditView>/tableBusyDelay}"
+                                busy="{HamperEditView>/tableBusy}"
+                                items="{path: 'NewProductModel>/ProductSet'}"
+                                mode="Delete"
+                                delete="handleDeleteProductItem">
+                                <m:headerToolbar>
+                                    <m:OverflowToolbar>
+                                        <m:Title text="{HamperEditView>/tableTitle}"
+                                            level="H2"/>
+                                        <m:ToolbarSpacer/>
+                                        <scan:BarcodeScannerButton dialogTitle="{i18n>BTN_SCAN_BARCODE}"
+                                            scanSuccess=".onScanSuccess"
+                                            scanFail=".onScanFail"
+                                            inputLiveUpdate=".onScanLiveUpdate"/>
+                                        <m:Button icon="sap-icon://add"
+                                            tooltip="{i18n>BTN_ADD}"
+                                            press="handleAddProduct"/>
+                                    </m:OverflowToolbar>
+                                </m:headerToolbar>
+
+                                <m:columns>
+                                    <m:Column>
+                                        <m:Text text="{i18n>LBL_PRODUCT}"/>
+                                    </m:Column>
+                                    <m:Column minScreenWidth="Tablet"
+                                        demandPopin="true">
+                                        <m:Text text="{i18n>LBL_EAN}"/>
+                                    </m:Column>
+                                    <m:Column minScreenWidth="Tablet"
+                                        demandPopin="true">
+                                        <m:Text text="{i18n>LBL_QUANTITY}"/>
+                                    </m:Column>
+                                    <m:Column hAlign="End">
+                                        <m:Text text="{i18n>LBL_SALES_PRICE}"/>
+                                    </m:Column>
+                                </m:columns>
+
+                                <m:items>
+                                    <m:ColumnListItem vAlign="Middle">
+                                        <m:ObjectIdentifier title="{NewProductModel>BomComponent}"
+                                            text="{NewProductModel>Description}"/>
+                                        <m:Text text="{NewProductModel>BaseEan}" />
+                                        <m:StepInput id="stepQuantity"
+                                            value="{NewProductModel>BomQuantity}"
+                                            step="{ path: 'NewProductModel>BomUnit', formatter: '.formatter.formatStepsUnit'}"
+                                            min="{ path: 'NewProductModel>BomUnit', formatter: '.formatter.formatStepsMinimum'}"
+                                            displayValuePrecision="{ path: 'NewProductModel>BomUnit', formatter: '.formatter.formatStepsValuePrecision'}"
+                                            textAlign="End"
+                                            validationMode="LiveChange"
+                                            change="onQuantityChange"
+                                            description="{NewProductModel>BomUnit}"/>
+                                        <m:ObjectNumber number="{ parts:[{path:'NewProductModel>BomPrice'},{path:'NewProductModel>BomCurrency'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+                                            unit="{NewProductModel>BomCurrency}"/>
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+        <footer>
+            <m:OverflowToolbar>
+                <m:Button icon="sap-icon://alert"
+                    text="{= ${message>/}.length }"
+                    visible="{= ${message>/}.length > 0 }"
+                    type="Negative"
+                    press="onMessagePopoverPress" />
+                <m:ToolbarSpacer/>
+                <m:Button type="Accept"
+                    text="{i18n>BTN_SAVE}"
+                    press=".onPressSave"/>
+                <m:Button type="Reject"
+                    text="{i18n>BTN_CANCEL}"
+                    press=".onPressCancel"/>
+            </m:OverflowToolbar>
+        </footer>
+    </ObjectPageLayout>
+</mvc:View>

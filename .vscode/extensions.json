@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"SAPOSS.sap-ux-fiori-tools-extension-pack",
+		"SAPOSS.xml-toolkit",
+		"dbaeumer.vscode-eslint"
+	]
+}

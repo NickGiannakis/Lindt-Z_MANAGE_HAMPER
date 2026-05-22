@@ -1,0 +1,167 @@
+<mvc:View controllerName="zmanagehamper.controller.HamperList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants">
+    <f:DynamicPage id="dynamicPageId"
+        headerExpanded="true"
+        busy="{HamperListView>/busy}">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>appTitle}"
+                        wrapping="true" />
+                </f:heading>
+                <f:actions>
+                    <ToolbarSpacer />
+                    <Label text="{i18n>LBL_STORE}"/>
+                    <Link id="linkStoreSelect" press=".handleSelectStore"/>
+                    <Button icon="sap-icon://action"
+                        type="Transparent" />
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Header -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar reset="onReset"
+                        clear="onReset"
+                        search="onSearch"
+                        showRestoreButton="true"
+                        showClearOnFB="true"
+                        useToolbar="false">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="__$INTERNAL$"
+                                name="A"
+                                label="{i18n>LBL_CREATE_AT}"
+                                visibleInFilterBar="true">
+                                <fb:control>
+                                    <DateRangeSelection id="dateRangeSearch"
+                                        change="handleChange"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G1"
+                                groupTitle="Group1"
+                                name="A1"
+                                label="{i18n>LBL_CREATE_BY}"
+                                visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="inpCreatedBySearch"
+                                        type="Text" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G1"
+                                groupTitle="Group1"
+                                name="B1"
+                                label="{i18n>LBL_DESCRIPTION}"
+                                visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="inpDescriptionSearch"
+                                        type="Text" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G1"
+                                groupTitle="Group1"
+                                name="C1"
+                                label="{i18n>LBL_HAMPER_ID}">
+                                <fb:control>
+                                    <Input id="inpHamperIdSearch"
+                                        type="Text" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- DynamicPage Content -->
+        <f:content>
+            <Table id="tableHampers"
+                inset="false"
+                items="{
+                            path: '/StoreHamperSet'
+                        }"
+                updateFinished=".onUpdateFinished"
+                busyIndicatorDelay="{HamperListView>/tableBusyDelay}"
+                busy="{HamperListView>/tableBusy}"
+                growingThreshold="20"
+                growing="true"
+                growingScrollToLoad="true"
+                contextualWidth="Auto"
+                popinLayout="GridSmall">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="{HamperListView>/tableTitle}"
+                                level="H2" />
+                            <ToolbarSpacer />
+                            <Button icon="sap-icon://add"
+                                tooltip="{i18n>BTN_CREATE}"
+                                press="handleCreateHamperPress" />
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="{i18n>LBL_HAMPER_ID}" />
+                    </Column>
+
+                    <Column minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="{i18n>LBL_DESCRIPTION}" />
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="{i18n>LBL_CREATE_AT}" />
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="{i18n>LBL_CREATE_BY}" />
+                    </Column>
+                    <Column hAlign="End">
+                        <Text text="{i18n>LBL_FINAL_PRICE}" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem vAlign="Middle"
+                        type="Navigation"
+                        press=".onPressHamper">
+                        <cells>
+                            <ObjectIdentifier title="{HamperNo}" />
+                            <Text text="{Description1}" />
+                            <Text text="{path: 'CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}" />
+                            <Text text="{UserFullname}" />
+                            <ObjectNumber number="{
+									parts:[{path:'SalesPrice'},{path:'Currency'}],
+									type: 'sap.ui.model.type.Currency',
+									formatOptions: {showMeasure: false}
+								}"
+                                unit="{Currency}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button type="Accept"
+                    text="Accept" />
+                <Button type="Reject"
+                    text="Reject" />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
