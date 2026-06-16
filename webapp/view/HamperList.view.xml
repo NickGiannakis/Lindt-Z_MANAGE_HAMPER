@@ -77,6 +77,27 @@
                                         type="Text" />
                                 </fb:control>
                             </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G1"
+                                groupTitle="Group1"
+                                name="D1"
+                                label="{i18n>LBL_VALIDITY}"
+                                visibleInFilterBar="true">
+                                <fb:control>
+                                    <SegmentedButton id="sbValiditySearch"
+                                        selectedKey="X">
+                                        <items>
+                                            <SegmentedButtonItem text="{i18n>LBL_DISCONTINUED}"
+                                                key="D" />
+                                            <SegmentedButtonItem text="{i18n>LBL_ALL}"
+                                                key="X" />
+                                            <SegmentedButtonItem text="{i18n>LBL_VALID}"
+                                                key="V" />
+                                        </items>
+                                    </SegmentedButton>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
                         </fb:filterGroupItems>
                     </fb:FilterBar>
                 </f:content>

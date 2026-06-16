@@ -38,6 +38,8 @@ sap.ui.define([
                 this._oSearchCreatedBy = this.byId("inpCreatedBySearch");
                 /** @typeOf sap.m.Link */
                 this._oLinkStoreSelect = this.byId("linkStoreSelect");
+                /** @typeOf sap.m.SegmentedButton */
+                this._oSearchValidity = this.byId("sbValiditySearch");
 
                 // Call the customizing servcie
                 this._callServiceGetStoreHamperCustomizing();
@@ -129,6 +131,7 @@ sap.ui.define([
                 this._oSearchDescription.setValue("");
                 this._oSearchHamper.setValue("");
                 this._oSearchCreatedBy.setValue("");
+                this._oSearchValidity.setSelectedKey("X");
             },
 
             /**
@@ -143,6 +146,7 @@ sap.ui.define([
                 let sDescription = this._oSearchDescription.getValue();
                 let sHamper = this._oSearchHamper.getValue();
                 let sCreatedBy = this._oSearchCreatedBy.getValue();
+                let sValidity = this._oSearchValidity.getSelectedKey();
 
                 if (oDateFrom) {
                     aFilters.push(new Filter(
@@ -171,6 +175,13 @@ sap.ui.define([
                         "CreatedBy",
                         FilterOperator.Contains,
                         sCreatedBy
+                    ));
+                }
+                if (sValidity && sValidity !== "X") {
+                    aFilters.push(new Filter(
+                        "DiscontinuedInd",
+                        FilterOperator.EQ,
+                        sValidity
                     ));
                 }
                 this._oTable.getBinding("items").filter(aFilters);
