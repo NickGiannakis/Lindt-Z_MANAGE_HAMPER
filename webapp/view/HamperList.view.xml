@@ -148,6 +148,10 @@
                         demandPopin="true">
                         <Text text="{i18n>LBL_CREATE_BY}" />
                     </Column>
+                    <Column minScreenWidth="Tablet"
+                        demandPopin="true">
+                        <Text text="{i18n>LBL_STORE_SALE_END_DATE}" />
+                    </Column>
                     <Column hAlign="End">
                         <Text text="{i18n>LBL_FINAL_PRICE}" />
                     </Column>
@@ -162,6 +166,7 @@
                             <Text text="{Description1}" />
                             <Text text="{path: 'CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}" />
                             <Text text="{UserFullname}" />
+                            <Text text="{path: 'Storesaleenddate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}" />
                             <ObjectNumber number="{
 									parts:[{path:'SalesPrice'},{path:'Currency'}],
 									type: 'sap.ui.model.type.Currency',
